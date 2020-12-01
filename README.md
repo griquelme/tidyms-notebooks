@@ -1,7 +1,7 @@
 Read Me
 =======
 
-This repository contains notebooks for the Applications 1 and 2 in the paper **A Python-based pipeline for preprocessing LC-MS data for untargeted metabolomics workflows** (ADD DOI). Currently the paper is in peer review and the data necessary for application 1 is under internal review by Metabolight's staff.
+This repository contains notebooks for the Applications published in the paper **A Python-based pipeline for preprocessing LC-MS data for untargeted metabolomics workflows** (https://doi.org/10.3390/metabo10100416).
 
 Usage
 -----
