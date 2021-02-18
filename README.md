@@ -9,7 +9,7 @@ Usage
 1. Install tidyms using pip:
 
 ```shell
-pip install requirements.txt
+pip install tidyms
 ```
 
 2. Some of the examples use the adjustText package to display text in the plots.
