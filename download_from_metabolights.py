@@ -20,16 +20,17 @@ def make_dir_safe(path="data"):
         os.makedirs(path)
 
 
-def download_sample_list(ftp, download_dir="data"):
-    sample_list_ftp_filename = "sample_list.csv"  # filename in the FTP server
-    sample_list_path = os.path.join(download_dir, sample_list_ftp_filename)
-    exists_sample_list = os.path.exists(sample_list_path)
+def download_file_ftp(ftp, fname, download_dir="data"):
+    fname_path = os.path.join(download_dir, fname)
+    exists_sample_list = os.path.exists(fname_path)
     if exists_sample_list:
-        print("Sample list found, checking centroid files...")
+        msg = "{} found".format(fname)
+        print(msg)
     else:
-        print("Sample list doesn't exists. Downloading from Metabolights...")
-        with open(sample_list_path, "wb") as fin:
-            ftp.retrbinary("RETR " + sample_list_ftp_filename, fin.write)
+        msg = "{} missing. Downloading from Metabolights...".format(fname)
+        print(msg)
+        with open(fname_path, "wb") as fin:
+            ftp.retrbinary("RETR " + fname, fin.write)
 
 
 def download_centroid_data(ftp, download_dir="data"):
@@ -43,7 +44,7 @@ def download_centroid_data(ftp, download_dir="data"):
     if exists_centroid_data:
         print("Centroid data found.")
     else:
-        print("Centroid data was not found. Downloading from Metabolights...")
+        print("Centroid data missing. Downloading from Metabolights...")
         centroid_data_path = os.path.join(download_dir, "cent")
         make_dir_safe(centroid_data_path)
         centroid_data_ftp_dir = "Centroid_data"
@@ -56,9 +57,17 @@ def download_centroid_data(ftp, download_dir="data"):
                 ftp.retrbinary("RETR " + file_ftp_path, fin.write)
 
 
-def get_data(download_dir):
+def get_application1_data(download_dir):
     ftp = start_ftp()
     make_dir_safe(download_dir)
-    download_sample_list(ftp, download_dir=download_dir)
+    download_file_ftp(ftp, "sample_list.csv", download_dir=download_dir)
     download_centroid_data(ftp, download_dir=download_dir)
+    ftp.close()
+    
+
+def get_application2_data(download_dir):
+    ftp = start_ftp()
+    make_dir_safe(download_dir)
+    download_file_ftp(ftp, "NIST001.csv", download_dir=download_dir)
+    download_file_ftp(ftp, "run-order-data.csv", download_dir=download_dir)
     ftp.close()
